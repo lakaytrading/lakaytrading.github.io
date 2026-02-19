@@ -25,34 +25,40 @@ content="
 
 <header>
   <h1>LAKAY TRADING</h1>
+  <p class="headerSubtitle">The peer-to-peer app for small transactions if you need gas fees</p>
 </header>
 
 <section class="card">
 
-  <div class="supported">
-    <h3>Supported Tokens</h3>
-    <div id="tokenList"></div>
-  </div>
+<div class="supported">
+  <h3>Supported Tokens</h3>
+  <div id="tokenList" class="tokenGrid"></div>
+</div>
 
-  <div class="selector">
+<div class="selectorGrid">
+  <div class="selectorBox">
     <select id="tokenSelect"></select>
-    <input type="text" id="priceDisplay" readonly>
   </div>
+  <div class="selectorBox">
+    <input type="text" id="priceDisplay" readonly placeholder="₱0.00">
+  </div>
+</div>
 
-  <div class="calc">
-    <div>
-      <label>Amount (PHP)</label>
-      <input type="number" id="amount">
-    </div>
-    <div>
-      <label>Quantity</label>
-      <input type="number" id="quantity">
-    </div>
-    <div>
-      <label>Total</label>
-      <input type="text" id="total" readonly>
-    </div>
+<div class="calcGrid">
+  <div class="calcBox">
+    <label>Amount (₱)</label>
+    <input type="number" id="amount" placeholder="₱0.00">
   </div>
+  <div class="calcBox">
+    <label>Quantity</label>
+    <input type="number" id="quantity" placeholder="0.0000">
+  </div>
+  <div class="calcBox fullWidth">
+    <label>Total (₱)</label>
+    <input type="text" id="total" readonly placeholder="₱0.00">
+  </div>
+</div>
+
 
 </section>
 
@@ -88,6 +94,16 @@ content="
     <button id="confirmBtn">Payment Sent</button>
   </div>
 </div>
+
+
+<div id="orderSentModal" class="modal">
+  <div class="modalContent">
+    <h2>Order Sent!</h2>
+    <p>Please wait while your token is being sent.</p>
+    <button id="closeOrderModal">Close</button>
+  </div>
+</div>
+
 
 <script src="app.js"></script>
 <script>

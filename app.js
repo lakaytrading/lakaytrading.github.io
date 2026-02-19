@@ -1,23 +1,33 @@
-const tokens = {
-  "BASE ETH": { price: 115500, balance: 0.82 },
-  "POL": { price: 12, balance: 100 },
-  "HBAR": { price: 11, balance: 200 },
-  "SOL": { price: 5500, balance: 1 },
-  "RON": { price: 12, balance: 100 }
-};
 
 const tokenList = document.getElementById("tokenList");
 const tokenSelect = document.getElementById("tokenSelect");
 const priceDisplay = document.getElementById("priceDisplay");
 
+const tokens = {
+  "BASE ETH": { price: 115500, balance: 0.82, logo: "logos/eth.png" },
+  "POL": { price: 12, balance: 100, logo: "logos/pol.png" },
+  "HBAR": { price: 11, balance: 200, logo: "logos/hbar.png" },
+  "SOL": { price: 5500, balance: 1, logo: "logos/solana.png" },
+  "RON": { price: 12, balance: 100, logo: "logos/ronin.png" }
+};
+
+tokenList.innerHTML = "";
+
 for (let t in tokens) {
-  tokenList.innerHTML += `
-    <div>
-      ${t} - ₱${tokens[t].price}
-      <br>Available: ${tokens[t].balance}
-    </div>`;
+  const token = tokens[t];
+  const div = document.createElement("div");
+  div.className = "tokenItem";
+  div.innerHTML = `
+    <div class="tokenHeader">
+      <img src="${token.logo}" alt="${t} logo">
+      ${t} - ₱${token.price}
+    </div>
+    <div>Available: ${token.balance}</div>
+  `;
+  tokenList.appendChild(div);
   tokenSelect.innerHTML += `<option value="${t}">${t}</option>`;
 }
+
 
 function updatePrice() {
   const selected = tokenSelect.value;
@@ -61,6 +71,9 @@ payBtn.onclick = () => {
   modal.style.display = "flex";
 };
 
+const orderSentModal = document.getElementById("orderSentModal");
+const closeOrderModalBtn = document.getElementById("closeOrderModal");
+
 confirmBtn.onclick = () => {
   const firstName = form.first_name.value;
   const lastName = form.last_name.value;
@@ -84,6 +97,13 @@ confirmBtn.onclick = () => {
     `Quantity: ${qty}`
   );
 
-  // Open user's email client with pre-filled email
+  modal.style.display = "none";
+
   window.location.href = `mailto:lakayfarming@gmail.com?subject=${subject}&body=${body}`;
+
+  orderSentModal.style.display = "flex";
+};
+
+closeOrderModalBtn.onclick = () => {
+  orderSentModal.style.display = "none";
 };
