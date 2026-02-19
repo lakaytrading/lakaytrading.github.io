@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta http-equiv="Content-Security-Policy"
+content="
+  default-src 'self';
+  script-src 'self';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self';
+  object-src 'none';
+  base-uri 'none';
+  frame-ancestors 'none';
+  form-action https://formsubmit.co;
+">
+
+<title>Lakay Trading</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>LAKAY TRADING</h1>
+</header>
+
+<section class="card">
+
+  <div class="supported">
+    <h3>Supported Tokens</h3>
+    <div id="tokenList"></div>
+  </div>
+
+  <div class="selector">
+    <select id="tokenSelect"></select>
+    <input type="text" id="priceDisplay" readonly>
+  </div>
+
+  <div class="calc">
+    <div>
+      <label>Amount (PHP)</label>
+      <input type="number" id="amount">
+    </div>
+    <div>
+      <label>Quantity</label>
+      <input type="number" id="quantity">
+    </div>
+    <div>
+      <label>Total</label>
+      <input type="text" id="total" readonly>
+    </div>
+  </div>
+
+</section>
+
+<section class="card">
+
+<form id="orderForm">
+
+<div class="nameRow">
+  <input type="text" name="first_name" placeholder="First Name" required>
+  <input type="text" name="last_name" placeholder="Last Name" required>
+</div>
+
+<input type="email" name="email" placeholder="Your Email" required>
+<input type="tel" name="gcash_number" placeholder="GCash Number" required>
+<input type="text" name="wallet_address" placeholder="Wallet Address" required>
+<button type="button" id="payBtn">PAY NOW</button>
+
+</form>
+
+
+</section>
+
+<!-- Payment Modal -->
+<div id="modal" class="modal">
+  <div class="modalContent">
+    <h2>Send Payment</h2>
+    <p>Crypto arrives within 1 to 30 minutes.</p>
+
+    <p><strong>Send Payment here:</strong></p>
+    <p>09505099544</p>
+    <p>Gcash Name: K**** D******</p>
+
+    <button id="confirmBtn">Payment Sent</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
+</script>
+
+</body>
+</html>
