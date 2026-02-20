@@ -10,8 +10,11 @@ content="
   script-src 'self';
   connect-src 'self'
     https://mainnet.base.org
-    https://rpc.ankr.com/polygon
+    https://polygon-mainnet.g.alchemy.com
     https://api.roninchain.com
+    https://toncenter.com
+    https://bnb-mainnet.g.alchemy.com
+    https://polygon-mainnet.g.alchemy.com
     https://api.mainnet-beta.solana.com
     https://mainnet-public.mirrornode.hedera.com;
   style-src 'self' 'unsafe-inline';
@@ -30,22 +33,37 @@ content="
 <body>
 
 <header>
-  <h1>LAKAY TRADING</h1>
-  <p class="headerSubtitle">The peer-to-peer app for small transactions if you need gas fees</p>
+  <div class="headerInner">
+    <img src="/logos/logo.png" alt="Lakay Trading Logo" class="headerLogo">
+    
+    <div class="headerText">
+      <h1>LAKAY TRADING</h1>
+      <p class="headerSubtitle">
+        The place where you can buy small amount of tokens for gas fees.
+      </p>
+    </div>
+  </div>
 </header>
 
 <section class="card">
 
 <div class="supported">
-  <h3>Supported Tokens</h3>
+  <h3 class="kevin">For Sale Tokens</h3>
   <div id="tokenList" class="tokenGrid"></div>
 </div>
 
-<div class="selectorGrid">
+
+</section>
+
+<section class="card">
+    <h3 class="kevin">Place your order</h3>
+  <div class="selectorGrid">
   <div class="selectorBox">
+      <label>Select Token</label>
     <select id="tokenSelect"></select>
   </div>
   <div class="selectorBox">
+      <label>Token Price</label>
     <input type="text" id="priceDisplay" readonly placeholder="₱0.00">
   </div>
 </div>
@@ -60,18 +78,15 @@ content="
     <input type="number" id="quantity" placeholder="0.0000">
   </div>
   <div class="calcBox fullWidth">
-    <label>Total (₱)</label>
+    <label>Total Amount Payable (₱)</label>
     <input type="text" id="total" readonly placeholder="₱0.00">
   </div>
 </div>
 
 
-</section>
-
-<section class="card">
 
 <form id="orderForm">
-
+<label>Your Gcash Details:</label>
 <div class="nameRow">
   <input type="text" name="first_name" placeholder="First Name" required>
   <input type="text" name="last_name" placeholder="Last Name" required>
@@ -79,15 +94,174 @@ content="
 
 <input type="email" name="email" placeholder="Your Email" required>
 <input type="tel" name="gcash_number" placeholder="GCash Number" required>
+<label>Your Crypto Wallet address</label>
 <input type="text" name="wallet_address" placeholder="Wallet Address" required>
-<button type="button" id="payBtn">PAY NOW</button>
+<div class="buttonRow">
+  <button type="button" id="payBtn">PAY NOW</button>
+  <button type="button" id="howToBtn">HOW TO BUY</button>
+</div>
 
 </form>
 
 
 </section>
 
-<!-- Payment Modal -->
+<div id="warningModal" class="warningModal">
+  <div class="warningContent">
+    
+    <h2>⚠️ MAHALAGANG PAALALA</h2>
+
+    <div class="warningScroll">
+
+      <p><strong>Siguraduhin muna na ikaw ay nasa tamang website ng LAKAY TRADING.</strong></p>
+
+      <p>
+        Marami nang mga scam website ngayon na ginagaya ang mga legit na app.
+        I-check palagi ang website link bago mag transact.
+      </p>
+
+      <p><strong>ITO LAMANG ANG OPISYAL NA WEBSITE:</strong></p>
+      <p style="color:#cc9503;">
+        https://lakaytrading.github.io
+      </p>
+
+      <hr>
+
+      <h3>Disclaimer</h3>
+
+      <p>
+        Ang <strong>LAKAY TRADING</strong> ay hindi isang trading exchange at hindi rin ito DEX.
+        Isa lamang itong simpleng peer-to-peer app na tumutulong sa mga user
+        na makabili ng maliit na halaga ng tokens para sa gas fees.
+      </p>
+
+      <p>
+        Walang minimum purchase dito kumpara sa mga exchanges na may minimum withdrawal.
+        Ako na rin ang sasagot sa gas fee ng pagpapadala ng token sa wallet mo.
+      </p>
+
+      <p>
+        Ngunit mahalagang malaman na ang presyo ng tokens dito ay maaaring halos doble
+        kumpara sa market price dahil ito ay retail at pang small transactions lamang.
+      </p>
+
+      <hr>
+
+      <h3>PAANO ANG PROCESS?</h3>
+
+      <p>
+        Ang transaction dito ay <strong>peer-to-peer</strong> at manually ko chine-check ang
+        payment kung pumasok na o hindi.
+      </p>
+
+      <p>
+        Payment first tayo dito. Ipapadala lamang ang token pagkatapos ma-verify ang payment.
+      </p>
+
+      <p>
+        Siguraduhing tama ang mga detalye na inilagay mo lalo na ang:
+      </p>
+
+      <ul>
+        <li>Wallet address</li>
+        <li>GCash number</li>
+        <li>Email address</li>
+      </ul>
+
+      <p>
+        Pagkatapos mo i send ang iyong payment sa gcash ko ay pindutin ang <strong>"Payment Sent"</strong> button, pag katapos ay automatic mag pop-up ang iyong email or gmail na may details ng iyong order kaya
+        siguraduhing na-send mo ang iyong order don sa email upang mkarating saakin ang iyong order.
+      </p>
+
+      <p>
+        Maaari ka ring mag-send ng screenshot ng iyong payment sa email bilang dagdag na patunay.
+      </p>
+
+      <hr>
+
+      <p>
+        Ang LAKAY TRADING ay hindi nagbibigay ng financial advice.
+        Laging mag double check bago mag confirm ng transaction.
+      </p>
+
+    </div>
+
+    <button id="closeWarning">I Understand</button>
+
+  </div>
+</div>
+
+<div id="howToModal" class="warningModal" style="display:none;">
+  <div class="warningContent">
+
+    <h2>Paano bumili ng Token sa LAKAY TRADING?</h2>
+
+    <div class="warningScroll">
+
+      <p><strong>Madali lang bumili ng token dito.</strong></p>
+
+      <h3>Step 1</h3>
+      <p>
+        Pumili ng token na gusto mong bilhin sa <strong>Select Token</strong> dropdown.
+      </p>
+       <img src="/logos/image1.jpg" style="width:100%; margin-top:10px; border: solid 4px #000;">
+      <h3>Step 2</h3>
+      <p>
+        Ilagay ang halaga (Amount) o Quantity ng token na gusto mong bilhin.
+        Automatic na lalabas ang <strong>Total Amount Payable</strong> na siyang babayaran mo.
+      </p>
+
+      <h3>Step 3</h3>
+      <p>
+        I-fill up ang:
+      </p>
+      <ul>
+        <li>GCash First Name</li>
+        <li>GCash Last Name</li>
+        <li>Active Email Address</li>
+        <li>GCash Number</li>
+        <li>Wallet Address na tatanggap ng token</li>
+      </ul>
+      <img src="/logos/image2.jpg" style="width:100%; margin-top:10px; border: solid 4px #000;">
+
+      <h3>Step 4</h3>
+      <p>
+        Kapag tama na ang lahat ng details, pindutin ang <strong>PAY NOW</strong>.
+      </p>
+
+      <img src="/logos/image3.jpg" style="width:100%; margin-top:10px; border: solid 4px #000;">
+
+      <h3>Step 5</h3>
+      <p>
+        Lalabas ang payment modal. Kopyahin ang GCash number at ipadala ang iyong payment.
+      </p>
+
+      <p>
+        Pagkatapos mong mag send ng payment, pindutin ang <strong>Payment Sent</strong> button.
+      </p>
+
+      <p>
+        Automatic na mag o-open ang iyong email na may summary ng order mo.
+        Siguraduhing ma-send mo ang email papunta sa akin.
+      </p>
+
+      <p>
+        Maaari kang mag attach ng screenshot ng payment bilang proof (optional).
+      </p>
+
+      <p>
+        Pagkatapos ma-send ang email, maghintay lamang ng 1 hanggang 30 minutes.
+      </p>
+
+      <img src="/logos/image4.jpg" style="width:100%; margin-top:10px; border: solid 4px #000;">
+
+    </div>
+
+    <button id="closeHowTo">Close</button>
+
+  </div>
+</div>
+
 <div id="modal" class="modal">
   <div class="modalContent">
     <h2>Send Payment</h2>
@@ -95,7 +269,7 @@ content="
 
     <p><strong>Send Payment here:</strong></p>
     <p>09505099544</p>
-    <p>Gcash Name: K**** D******</p>
+    <p>Gcash Name: KE**N D.</p>
 
     <button id="confirmBtn">Payment Sent</button>
   </div>
@@ -110,7 +284,7 @@ content="
   </div>
 </div>
 
-
+<script src="ethers.umd.min.js"></script>
 <script src="app.js"></script>
 <script>
 if ('serviceWorker' in navigator) {

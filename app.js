@@ -4,51 +4,74 @@ const tokenSelect = document.getElementById("tokenSelect");
 const priceDisplay = document.getElementById("priceDisplay");
 
 const tokens = {
-  "BASE ETH": {
-    price: 115500,
-    chain: "evm",
-    rpc: "https://mainnet.base.org",
-    wallet: "0x867B141B909a5baA9245D80ce49425050aF8F7B5",
-    logo: "logos/eth.png",
-    balance: 0
-  },
-
-  "POL": {
-    price: 12,
-    chain: "evm",
-    rpc: "https://rpc.ankr.com/polygon",
-    wallet: "0x867B141B909a5baA9245D80ce49425050aF8F7B5",
-    logo: "logos/pol.png",
-    balance: 0
-  },
-
-  "RON": {
+    "RONIN (RON)": {
     price: 12,
     chain: "evm",
     rpc: "https://api.roninchain.com/rpc",
-    wallet: "ronin:YOUR_RONIN_WALLET",
+    wallet: "0x05b4CBc444205E176Ad84928ce9cED730DAeD4C5",
     logo: "logos/ronin.png",
-    balance: 0
+    balance: 0,
+    chainId: 2020
+  },
+  
+    "POLYGON (POL)": {
+    price: 12,
+    chain: "evm",
+    rpc: "https://polygon-mainnet.g.alchemy.com/v2/SvwOY9p6epW4FCU-RbmDe",
+    wallet: "0x05b4CBc444205E176Ad84928ce9cED730DAeD4C5",
+    logo: "logos/pol.png",
+    balance: 0,
+    chainId: 137
+  },
+  
+  "Ethereum (ETH-BASE)": {
+    price: 180000,
+    chain: "evm",
+    rpc: "https://mainnet.base.org",
+    wallet: "0x05b4CBc444205E176Ad84928ce9cED730DAeD4C5",
+    logo: "logos/eth.png",
+    balance: 0,
+    chainId: 8453
   },
 
-  "SOL": {
-    price: 5500,
+  "SOLANA (SOL)": {
+    price: 7500,
     chain: "sol",
-    wallet: "YOUR_SOL_WALLET",
+    wallet: "6GK74UhpLrQgfGFB4Rwf2JQrMhwVTTerwGp1k1PxqFqw",
     logo: "logos/solana.png",
     balance: 0
   },
 
-  "HBAR": {
+  "Hedera (HBAR)": {
     price: 11,
     chain: "hedera",
     wallet: "0.0.YOUR_ACCOUNT_ID",
     logo: "logos/hbar.png",
     balance: 0
-  }
+  },
+  
+  "BNB (BSC)": {
+  price: 50000, 
+  chain: "evm",
+  rpc: "https://bnb-mainnet.g.alchemy.com/v2/Tw9d5AaaGUqS9RcThkOVo",
+  wallet: "0x05b4CBc444205E176Ad84928ce9cED730DAeD4C5",
+  logo: "logos/bnb.png",
+  balance: 0,
+  chainId: 56
+},
+
+"TON (TON)": {
+  price: 140, 
+  chain: "ton",
+  wallet: "UQADTH0gRuJlBX6MCqYNWBuNnbV4CGo27aP9h3A5jOVXofEy",
+  logo: "logos/ton.png",
+  balance: 0
+}
 };
 
 function renderTokens() {
+  const currentSelection = tokenSelect.value || localStorage.getItem("selectedToken");
+
   tokenList.innerHTML = "";
   tokenSelect.innerHTML = "";
 
@@ -64,42 +87,37 @@ function renderTokens() {
       </div>
       <div>Available: ${token.balance}</div>
     `;
-
     tokenList.appendChild(div);
-    tokenSelect.innerHTML += `<option value="${t}">${t}</option>`;
+
+    const option = document.createElement("option");
+    option.value = t;
+    option.textContent = t;
+
+    if (t === currentSelection) {
+      option.selected = true;
+    }
+
+    tokenSelect.appendChild(option);
   }
 
   updatePrice();
 }
-
 async function fetchEVMBalance(tokenName) {
   const token = tokens[tokenName];
 
-  let wallet = token.wallet;
-  if (wallet.startsWith("ronin:")) {
-    wallet = wallet.replace("ronin:", "0x");
-  }
-
   try {
-    const res = await fetch(token.rpc, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        jsonrpc: "2.0",
-        id: 1,
-        method: "eth_getBalance",
-        params: [wallet, "latest"]
-      })
-    });
+    const provider = new ethers.providers.JsonRpcProvider(token.rpc);
 
-    const data = await res.json();
-    const wei = parseInt(data.result, 16);
-    token.balance = (wei / 1e18).toFixed(4);
+    const balanceWei = await provider.getBalance(token.wallet);
+    const balance = parseFloat(ethers.utils.formatEther(balanceWei));
 
-    renderTokens();
+    token.balance = balance.toFixed(4);
   } catch (err) {
-    console.error("EVM fetch error:", err);
+    console.warn(`${tokenName} EVM fetch warning:`, err.message);
+    token.balance = "0.0000";
   }
+
+  renderTokens();
 }
 
 async function fetchSolBalance(tokenName) {
@@ -135,6 +153,26 @@ async function fetchHbarBalance(tokenName) {
   renderTokens();
 }
 
+async function fetchTonBalance(tokenName) {
+  const token = tokens[tokenName];
+
+  try {
+    const res = await fetch(
+      `https://toncenter.com/api/v2/getAddressBalance?address=${token.wallet}`
+    );
+
+    const data = await res.json();
+    token.balance = (data.result / 1e9).toFixed(4);
+
+    renderTokens();
+
+  } catch (err) {
+    console.error("TON fetch error:", err);
+    token.balance = "0.0000";
+    renderTokens();
+  }
+}
+
 function refreshAllBalances() {
   for (let t in tokens) {
     if (tokens[t].chain === "evm") {
@@ -148,13 +186,24 @@ function refreshAllBalances() {
     if (tokens[t].chain === "hedera") {
       fetchHbarBalance(t);
     }
+    
+    if (tokens[t].chain === "ton") {
+      fetchTonBalance(t);
+    }
+    
   }
 }
 
+
 renderTokens();
+const savedToken = localStorage.getItem("selectedToken");
+if (savedToken && tokens[savedToken]) {
+  tokenSelect.value = savedToken;
+}
+updatePrice();
+
 refreshAllBalances();
 setInterval(refreshAllBalances, 30000);
-
 
 function updatePrice() {
   const selected = tokenSelect.value;
@@ -162,7 +211,10 @@ function updatePrice() {
 }
 updatePrice();
 
-tokenSelect.addEventListener("change", updatePrice);
+tokenSelect.addEventListener("change", () => {
+  updatePrice();
+  localStorage.setItem("selectedToken", tokenSelect.value);
+});
 
 const amount = document.getElementById("amount");
 const quantity = document.getElementById("quantity");
@@ -233,4 +285,27 @@ confirmBtn.onclick = () => {
 
 closeOrderModalBtn.onclick = () => {
   orderSentModal.style.display = "none";
+};
+
+const warningModal = document.getElementById("warningModal");
+const closeWarningBtn = document.getElementById("closeWarning");
+
+window.addEventListener("load", () => {
+  warningModal.style.display = "flex";
+});
+
+closeWarningBtn.onclick = () => {
+  warningModal.style.display = "none";
+};
+
+const howToBtn = document.getElementById("howToBtn");
+const howToModal = document.getElementById("howToModal");
+const closeHowTo = document.getElementById("closeHowTo");
+
+howToBtn.onclick = () => {
+  howToModal.style.display = "flex";
+};
+
+closeHowTo.onclick = () => {
+  howToModal.style.display = "none";
 };

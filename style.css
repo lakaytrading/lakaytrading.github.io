@@ -1,9 +1,9 @@
 body {
   margin:0;
   font-family: monospace;
-  background:#000;
-  color:#38bdf8;
-  padding-top: 70px;
+  background:#1F2F29;
+  color:#e6e2d8;
+  padding-top: 80px;
 }
 * {
   box-sizing: border-box;
@@ -11,28 +11,58 @@ body {
 
 
 header {
-  position: fixed;       
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;         
-  text-align: center;
-  padding: 15px;
-  background: #3b2f2f;
-  border-bottom: 4px solid #38bdf8;
+  z-index: 1000;
+  background: #1F2F29;
+  border-bottom: 4px solid #4b6b5c;
+  outline: solid 2px #000;
+  padding: 10px 15px;
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.headerLogo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  outline: solid 2px #000;
+  border-radius: 50%;
+  
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 header h1 {
-  margin-bottom: 0;       
+  margin: 0;
+  font-size: 30px;
 }
 
+.headerSubtitle {
+  margin: 2px 0 0 0;
+  font-size: 11px;
+  color: #a1e5dc;
+  line-height: 1.2;
+}
 
 .card {
   margin:15px;
-  margin-top: 50px;
+  margin-top: 25px;
   padding:15px;
-  border:3px solid #38bdf8;
-  background:#111;
+  border:3px solid #344D43;
+  background:#11433d;
+  border-radius: 10px;
+  outline: solid 2px #000;
 }
 
 .supported div {
@@ -43,25 +73,32 @@ select, input {
   width: 100%;
   padding: 10px;
   margin-top: 6px;
-  background: #000;
-  color: #38bdf8;
-  border: 2px solid #38bdf8;
+  background: #151F1B;
+  color: #cc9503;
+  border: 2px solid #344D43;
   font-size: 14px;
+  outline: solid 2px #000;
 }
 
 
 button {
-  width:100%;
+  width:40%;
   padding:10px;
-  background:#38bdf8;
+  background:#299d8b;
   color:#000;
   border:none;
   font-weight:bold;
   margin-top:10px;
+  border-radius: 10px;
+  text-align: center;
+  outline: solid 2px #000;
 }
 
+
 button:active {
-  background:#0ea5e9;
+  transform: scale(01.1);
+  background:#cc9503;
+  
 }
 
 .nameRow {
@@ -83,12 +120,14 @@ button:active {
   display:none;
   align-items:center;
   justify-content:center;
+  z-index: 2000;
+  outline: solid 2px #000;
 }
 
 .modalContent {
   background:#3b2f2f;
   padding:20px;
-  border:3px solid #38bdf8;
+  border:3px solid #11433d;
   width:90%;
   text-align:center;
 }
@@ -101,11 +140,14 @@ button:active {
 }
 
 .tokenItem {
-  border: 2px solid #38bdf8;
+  border: 2px solid #11433d;
   padding: 8px;
   display: flex;
   flex-direction: column;
-  background: #111;
+  background: #1F2F29;
+  color: #a1e5dc;
+  border-radius: 10px;
+  outline: solid 2px #000;
 }
 
 .tokenHeader {
@@ -155,3 +197,87 @@ button:active {
   line-height: 1.2;     
 }
 
+.kevin {
+  color: #a1e5dc;
+  font-size: 20px;
+  margin-top: 2px;
+  background-color: #1F2F29;
+  border-radius: 6px;
+  width:70%;
+  text-align: center;
+  outline: solid 2px #000;
+  
+}
+
+.warningModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.warningContent {
+  width: 98%;
+  height: 95%;
+  background: #151F1B;
+  border: 4px solid #4b6b5c;
+  outline: solid 3px #000;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.warningContent h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #cc9503;
+}
+
+.warningScroll {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding-right: 8px;
+  text-align: left;
+}
+
+
+.warningScroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.warningScroll::-webkit-scrollbar-track {
+  background: #1F2F29;
+  border: 2px solid #000;
+}
+
+.warningScroll::-webkit-scrollbar-thumb {
+  background: #4b6b5c;
+  border: 2px solid #000;
+}
+
+#closeWarning {
+  margin-top: 10px;
+  align-self: center;
+  width: 50%;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 10px;
+}
+
+.buttonRow button {
+  flex: 1;
+}
+
+#howToBtn {
+  background-color: #cc9503;
+}
