@@ -3,7 +3,7 @@
   "short_name": "Lakay",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#000000",
+  "background_color": "#1F2F29",
   "theme_color": "#38bdf8",
   "icons": []
 }
