@@ -322,3 +322,50 @@ button:active {
   color: #888;
 }
 
+
+.scheduleModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4000; 
+}
+
+.scheduleContent {
+  width: 90%;
+  max-width: 500px;
+  height: 70%; 
+  background: #151F1B;
+  border: 4px solid #4b6b5c;
+  outline: solid 3px #000;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.scheduleContent h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #cc9503;
+}
+
+.scheduleBody {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding-right: 8px;
+  text-align: left;
+}
+
+#closeSchedule {
+  margin-top: 10px;
+  align-self: center;
+  width: 60%;
+}
+

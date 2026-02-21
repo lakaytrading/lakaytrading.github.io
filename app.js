@@ -329,12 +329,21 @@ closeOrderModalBtn.onclick = () => {
   orderSentModal.style.display = "none";
 };
 
+const scheduleModal = document.getElementById("scheduleModal");
+const closeScheduleBtn = document.getElementById("closeSchedule");
+
+closeScheduleBtn.onclick = () => {
+  scheduleModal.style.display = "none";
+};
+
 const warningModal = document.getElementById("warningModal");
 const closeWarningBtn = document.getElementById("closeWarning");
 
 window.addEventListener("load", () => {
+  scheduleModal.style.display = "flex";
   warningModal.style.display = "flex";
 });
+
 
 closeWarningBtn.onclick = () => {
   warningModal.style.display = "none";
