@@ -267,6 +267,18 @@ content="
     <h2>Send Payment</h2>
     <p>Crypto arrives within 1 to 30 minutes.</p>
 
+    <hr>
+
+    <h3>Order Summary</h3>
+    <p><strong>Token:</strong> <span id="modalToken"></span></p>
+    <p><strong>Price:</strong> <span id="modalPrice"></span></p>
+    <p><strong>Quantity:</strong> <span id="modalQuantity"></span></p>
+    <p><strong>Total Amount Payable:</strong> 
+      <span id="modalTotal" style="color:#cc9503; font-size:18px;"></span>
+    </p>
+
+    <hr>
+
     <p><strong>Send Payment here:</strong></p>
     <p>09505099544</p>
     <p>Gcash Name: KE**N D.</p>
@@ -274,7 +286,6 @@ content="
     <button id="confirmBtn">Payment Sent</button>
   </div>
 </div>
-
 
 <div id="orderSentModal" class="modal">
   <div class="modalContent">
@@ -291,6 +302,22 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
 }
 </script>
+<footer class="socialFooter">
+  <div class="socialContainer">
+    <div class="socialIcons">
+      <a href="https://m.me/j/AbZGvnPqtLaMW8lh/" target="_blank" rel="noopener">
+        <img src="logos/fb.png" alt="Facebook">
+      </a>
 
+      <a href="https://t.me/+xdE-Y19OHEgxMDI1" target="_blank" rel="noopener">
+        <img src="logos/telegram.png" alt="Telegram">
+      </a>
+    </div>
+
+    <p class="copyright">
+      © 2026 Lakay Trading. All rights reserved.
+    </p>
+  </div>
+</footer>
 </body>
 </html>

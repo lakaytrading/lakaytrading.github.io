@@ -223,13 +223,27 @@ const total = document.getElementById("total");
 function calculateFromAmount() {
   const selected = tokenSelect.value;
   const price = tokens[selected].price;
+
+  if (!amount.value) {
+    quantity.value = "";
+    total.value = "";
+    return;
+  }
+
   quantity.value = (amount.value / price).toFixed(6);
-  total.value = amount.value;
+  total.value = parseFloat(amount.value).toFixed(2);
 }
 
 function calculateFromQuantity() {
   const selected = tokenSelect.value;
   const price = tokens[selected].price;
+
+  if (!quantity.value) {
+    amount.value = "";
+    total.value = "";
+    return;
+  }
+
   amount.value = (quantity.value * price).toFixed(2);
   total.value = amount.value;
 }
@@ -247,9 +261,19 @@ payBtn.onclick = () => {
     alert("Please enter amount or quantity.");
     return;
   }
+
+  const selectedToken = tokenSelect.value;
+  const price = tokens[selectedToken].price;
+  const qty = quantity.value;
+  const totalAmount = total.value;
+
+  document.getElementById("modalToken").textContent = selectedToken;
+  document.getElementById("modalPrice").textContent = "₱" + price;
+  document.getElementById("modalQuantity").textContent = qty;
+  document.getElementById("modalTotal").textContent = "₱" + totalAmount;
+
   modal.style.display = "flex";
 };
-
 const orderSentModal = document.getElementById("orderSentModal");
 const closeOrderModalBtn = document.getElementById("closeOrderModal");
 
@@ -266,15 +290,33 @@ confirmBtn.onclick = () => {
 
   const subject = encodeURIComponent("New Order - LAKAY TRADING");
   const body = encodeURIComponent(
-    `Name: ${firstName} ${lastName}\n` +
-    `Email: ${email}\n` +
-    `GCash Number: ${gcash}\n` +
-    `Wallet Address: ${wallet}\n` +
-    `Token: ${token}\n` +
-    `Price: ₱${price}\n` +
-    `Amount Paid: ₱${amt}\n` +
-    `Quantity: ${qty}`
-  );
+`========================================
+           LAKAY TRADING
+             ORDER RECEIPT
+========================================
+
+CUSTOMER INFORMATION
+----------------------------------------
+Name           : ${firstName} ${lastName}
+Email          : ${email}
+GCash Number   : ${gcash}
+Wallet Address : ${wallet}
+
+----------------------------------------
+ORDER DETAILS
+----------------------------------------
+Token          : ${token}
+Price          : ₱${price}
+Quantity       : ${qty}
+Total Paid     : ₱${amt}
+
+========================================
+NOTE:
+Please make sure to send this order receipt to my email above so i can get your order.. and make sure you paid the the total amount payable. You can also include a screenshot of your payment (optional) or send me a text message in my gcash number saying you already paid the amount.. this is to make the transaction more faster than normal as it get me notify real time.
+
+NICE DOING BUSINESS WITH YOU...sa uulitin:)
+========================================`
+);
 
   modal.style.display = "none";
 

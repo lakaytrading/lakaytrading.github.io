@@ -281,3 +281,44 @@ button:active {
 #howToBtn {
   background-color: #cc9503;
 }
+
+.socialFooter {
+  margin-top: 5px;
+  padding: 5px 2px;
+  background: #151F1B;
+  border-top: 4px solid #4b6b5c;
+  outline: solid 2px #000;
+  text-align: center;
+}
+
+.socialContainer p {
+  margin: 2px 0;
+  color: #a1e5dc;
+  font-size: 14px;
+}
+
+.socialIcons {
+  margin-top: 2px;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.socialIcons img {
+  width: 45px;
+  height: 45px;
+  transition: transform 0.2s ease;
+  outline: solid 4px #000;
+  border-radius: 50%;
+}
+
+.socialIcons img:hover {
+  transform: scale(1.2);
+}
+
+.copyright {
+  margin-top: 15px;
+  font-size: 8px;
+  color: #888;
+}
+
