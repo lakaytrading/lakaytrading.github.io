@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://lakaytrading.github.io/sitemap.xml
