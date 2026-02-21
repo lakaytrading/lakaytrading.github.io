@@ -1,4 +1,4 @@
-const CACHE = "lakay-v3";
+const CACHE = "lakay-v4";
 
 self.addEventListener("install", e => {
   e.waitUntil(
