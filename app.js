@@ -256,6 +256,52 @@ const payBtn = document.getElementById("payBtn");
 const confirmBtn = document.getElementById("confirmBtn");
 const form = document.getElementById("orderForm");
 
+function maskName(firstName, lastName) {
+
+  function maskMain(word) {
+    word = word.trim();
+
+    if (word.length <= 2) {
+      return word.toUpperCase();
+    }
+
+    const firstTwo = word.substring(0, 2);
+    const lastLetter = word.substring(word.length - 1);
+    const stars = "*".repeat(word.length - 3);
+
+    return (firstTwo + stars + lastLetter).toUpperCase();
+  }
+
+  function maskExtension(word) {
+    word = word.trim();
+
+    if (word.length === 1) {
+      return word.toUpperCase();
+    }
+
+    return (
+      word[0].toUpperCase() +
+      "*".repeat(word.length - 1)
+    );
+  }
+
+  const parts = firstName.trim().split(/\s+/);
+
+  let masked = maskMain(parts[0]);
+
+  if (parts.length > 1) {
+    const ext = parts
+      .slice(1)
+      .map(maskExtension)
+      .join(" ");
+    masked += " " + ext;
+  }
+
+  const maskedLast = lastName.trim()[0].toUpperCase() + ".";
+
+  return masked + " " + maskedLast;
+}
+
 payBtn.onclick = () => {
   if (!amount.value || !quantity.value) {
     alert("Please enter amount or quantity.");
@@ -280,6 +326,7 @@ const closeOrderModalBtn = document.getElementById("closeOrderModal");
 confirmBtn.onclick = () => {
   const firstName = form.first_name.value;
   const lastName = form.last_name.value;
+  const maskedFullName = maskName(firstName, lastName);
   const email = form.email.value;
   const gcash = form.gcash_number.value;
   const wallet = form.wallet_address.value;
@@ -297,7 +344,7 @@ confirmBtn.onclick = () => {
 
 CUSTOMER INFORMATION
 ----------------------------------------
-Name           : ${firstName} ${lastName}
+Name           : ${maskedFullName}
 Email          : ${email}
 GCash Number   : ${gcash}
 Wallet Address : ${wallet}
